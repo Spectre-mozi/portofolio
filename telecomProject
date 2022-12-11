@@ -1,0 +1,233 @@
+SELECT * FROM telecom;
+
+DESC TABLE telecom;
+
+ALTER TABLE telecom RENAME COLUMN ï»¿region to region;
+
+ALTER TABLE telecom RENAME COLUMN marital TO marital_status;
+
+ALTER TABLE telecom RENAME COLUMN address TO years_of_residence;
+
+ALTER TABLE telecom RENAME COLUMN ed TO education_level;
+
+ALTER TABLE telecom RENAME COLUMN reside TO number_of_people_in_household;
+
+ALTER TABLE telecom RENAME COLUMN tollfree TO tollfree_service;
+
+ALTER TABLE telecom RENAME COLUMN equip TO equipment_rental;
+
+ALTER TABLE telecom RENAME COLUMN callcard TO calling_card_service;
+
+ALTER TABLE telecom RENAME COLUMN wireless TO wireless_service;
+
+ALTER TABLE telecom RENAME COLUMN longmon TO long_month_service;
+
+ALTER TABLE telecom RENAME COLUMN tollmon TO tollfree_lastmonth;
+
+ALTER TABLE telecom RENAME COLUMN equipmon TO equipment_lastmonth;
+
+ALTER TABLE telecom RENAME COLUMN cardmon TO callingcard_lastmonth;
+
+ALTER TABLE telecom RENAME COLUMN marital TO marital_status;
+
+ALTER TABLE telecom RENAME COLUMN wiremon TO wireless_lastmonth;
+
+ALTER TABLE telecom RENAME COLUMN longten TO longdistance_overTenure;
+
+ALTER TABLE telecom RENAME COLUMN tollten TO tollfree_overTenure;
+
+ALTER TABLE telecom RENAME COLUMN equipten TO equipment_overTenure;
+
+ALTER TABLE telecom RENAME COLUMN cardten TO cardCard_overTenure;
+
+ALTER TABLE telecom RENAME COLUMN wireten TO wireless_overTenure;
+
+ALTER TABLE telecom RENAME COLUMN voice TO voice_mail;
+
+ALTER TABLE telecom RENAME COLUMN custcat TO customer_categroy;
+
+ALTER TABLE telecom RENAME COLUMN churn TO churn_within_lastmonth;
+
+SELECT
+	*
+FROM
+	telecom;
+
+SHOW CREATE TABLE telecom;
+
+ALTER TABLE telecom MODIFY COLUMN region varchar(200);
+
+
+-- UPDATE telecom
+-- SET region = 'Zone 1'
+-- WHERE region = 1;
+
+UPDATE telecom
+SET region = 'Zone 3'
+WHERE region = '3';
+
+UPDATE telecom
+SET region = 'Zone 2'
+WHERE region = '2';
+
+UPDATE telecom
+SET region = 'Zone 4'
+WHERE region = '4';
+
+UPDATE telecom
+SET region = 'Zone 5'
+WHERE region = '5';
+
+
+SELECT region FROM telecom;
+
+ALTER TABLE telecom MODIFY COLUMN marital_status VARCHAR(20);
+
+UPDATE telecom
+SET marital_status = 'Unmarried'
+WHERE marital_status = '0';
+
+UPDATE telecom
+SET marital_status = 'Married'
+WHERE marital_status = '1';
+
+SELECT 
+	marital_status
+FROM
+	telecom;
+
+SELECT 
+    COUNT(marital_status), marital_status
+FROM
+    telecom
+GROUP BY marital_status;
+
+ALTER TABLE telecom MODIFY COLUMN education_level VARCHAR(100);
+
+UPDATE telecom
+SET education_level = 'Did not complete high school'
+WHERE education_level = '1';
+
+UPDATE telecom
+SET education_level = 'High School'
+WHERE education_level = '2';
+
+UPDATE telecom
+SET education_level = 'Some College'
+WHERE education_level = '3';
+
+UPDATE telecom
+SET education_level = 'College Degree'
+WHERE education_level = '4';
+
+UPDATE telecom
+SET education_level = 'Post-Undergraduate degree'
+WHERE education_level = '5';
+
+ALTER TABLE telecom MODIFY COLUMN retire VARCHAR(20);
+
+UPDATE telecom
+SET retire= 'No'
+WHERE education_level = '0';
+
+UPDATE telecom
+SET retire= 'Yes'
+WHERE education_level = '1';
+
+SELECT 
+    gender
+FROM
+    telecom;
+
+ALTER TABLE telecom MODIFY COLUMN gender VARCHAR(20);
+
+UPDATE telecom
+SET gender = 'Male'
+WHERE gender = '0';
+
+UPDATE telecom
+SET gender = 'Female'
+WHERE gender = '1';
+
+ALTER TABLE telecom MODIFY COLUMN tollfree_service VARCHAR(20);
+
+UPDATE telecom
+SET tollfree_service = 'No'
+WHERE tollfree_service = '0';
+
+UPDATE telecom
+SET tollfree_service = 'Yes'
+WHERE tollfree_service = '1';
+
+ALTER TABLE telecom MODIFY COLUMN equipment_rental VARCHAR(20);
+
+UPDATE telecom
+SET equipment_rental = 'No'
+WHERE equipment_rental = '0';
+
+UPDATE telecom
+SET equipment_rental = 'Yes'
+WHERE equipment_rental = '1';
+
+ALTER TABLE telecom MODIFY COLUMN calling_card_service VARCHAR(20);
+
+UPDATE telecom
+SET calling_card_service = 'No'
+WHERE calling_card_service = '0';
+
+UPDATE telecom
+SET calling_card_service = 'Yes'
+WHERE calling_card_service = '1';
+
+ALTER TABLE telecom MODIFY COLUMN wireless_service VARCHAR(20);
+
+UPDATE telecom
+SET wireless_service = 'No'
+WHERE wireless_service = '0';
+
+UPDATE telecom
+SET wireless_service = 'Yes'
+WHERE wireless_service = '1';
+
+ALTER TABLE telecom MODIFY COLUMN churn_within_lastmonth VARCHAR(20);
+
+UPDATE telecom
+SET churn_within_lastmonth = 'No'
+WHERE churn_within_lastmonth = '0';
+
+UPDATE telecom
+SET churn_within_lastmonth = 'Yes'
+WHERE churn_within_lastmonth = '1';
+
+--DATA EXPLORATION
+
+SELECT 
+    COUNT(marital_status) AS total_marital, marital_status
+FROM
+    telecom
+GROUP BY marital_status;
+
+SELECT 
+    COUNT(education_level) AS total_education, education_level
+FROM
+    telecom
+GROUP BY education_level
+ORDER BY total_education DESC;
+
+SELECT
+	(SELECT MIN(years_of_residence) AS 'Minimum years of living' FROM telecom) AS 'Minimum years of living' ,
+    (SELECT MAX(years_of_residence) AS 'Maximum years of living' FROM telecom)'Maximum years of living';
+
+SELECT
+	(SELECT MIN(years_of_residence) FROM telecom) AS 'Minimum income' ,
+    (SELECT MAX(years_of_residence)  FROM telecom)'Maximum income',
+    (SELECT AVG(years_of_residence)  FROM telecom)'AVEREGE income';
+
+UPDATE telecom
+SET gender = 'Female'
+WHERE gender = '1';
+
+SELECT education_level, gender, marital_status, COUNT(*)
+FROM telecom
+GROUP BY education_level, gender,marital_status
+ORDER BY COUNT(*);
